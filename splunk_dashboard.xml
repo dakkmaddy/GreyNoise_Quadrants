@@ -1,0 +1,87 @@
+<form version="1.1" theme="dark">
+  <label>GreyNoise_Quad</label>
+  <fieldset submitButton="true">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>GreyNoise Scatter - Top Left</title>
+      <chart>
+        <title>Shifting NOISE</title>
+        <search>
+          <query>index=*   source="/srv/Splunk/GreyNoise/*"
+| where greyTime&lt;30 
+| where greyFocus&gt;45
+| fields ipaddr greyTime greyFocus 
+| table ipaddr greyTime greyFocus</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">scatter</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>GreyNoise Scatter - Top Right</title>
+      <chart>
+        <title>Persistent NOISE</title>
+        <search>
+          <query>index=*   source="/srv/Splunk/GreyNoise/*" | where greyTime&gt;29
+| where greyFocus&gt;45
+| fields ipaddr greyTime greyFocus 
+| table ipaddr greyTime greyFocus</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.axisX.scale">log</option>
+        <option name="charting.chart">scatter</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>GreyNoise Scatter - Bottom Left</title>
+      <chart>
+        <title>Targeted NOISE</title>
+        <search>
+          <query>index=*   source="/srv/Splunk/GreyNoise/*" | where greyTime&lt;30 
+| where greyFocus&lt;46
+| fields ipaddr greyTime greyFocus 
+| table ipaddr greyTime greyFocus</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.chart">scatter</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>GreyNoise Scatter - Bottom Right</title>
+      <chart>
+        <title>Abandoned NOISE</title>
+        <search>
+          <query>index=*   source="/srv/Splunk/GreyNoise/*" | where greyTime&gt;29 
+| where greyFocus&lt;46
+| fields ipaddr greyTime greyFocus 
+| table ipaddr greyTime greyFocus</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="charting.axisX.scale">log</option>
+        <option name="charting.chart">scatter</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>
